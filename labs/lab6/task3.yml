@@ -1,0 +1,16 @@
+Create a new playbook cisco_hostanme.yml.
+Use the ios_config module to change the system hostname.
+Your playbook should look like this:
+
+#!/usr/bin/env ansible-playbook
+---
+- name: set hostname configuration
+  hosts: r1
+  gather_facts: false
+  vars:
+    hostname: csr-a
+  tasks:
+  - name: Set system host-name on {{ inventory_hostname }}
+    cisco.ios.ios_config:
+      lines:
+        - hostname {{ hostname }}

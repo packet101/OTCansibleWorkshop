@@ -1,0 +1,21 @@
+Create a new playbook junos_ip.yml. This playbook should be modeled on 
+cisco_ip3.yml, using a loop construct to define the parameters of each
+interface. 
+
+
+#!/usr/bin/env ansible-playbook
+---
+- name: set IP address on r2
+  hosts: r2
+  gather_facts: false
+  tasks:
+  - name: Configure interfaces on r2
+    junipernetworks.junos.junos_l3_interfaces:
+      config:
+      - name: "{{ item.int }}"
+        unit: "{{ item.unit }}"
+        ipv4:
+          - address: "{{ item.ip }}/{{ item.mask }}"
+    loop:
+      - { int: lo0, unit: 0, ip: 172.31.1.2, mask: 32 }
+      - { int: ge-0/0/0, unit: 0, ip: 10.200.200.2, mask: 24 }

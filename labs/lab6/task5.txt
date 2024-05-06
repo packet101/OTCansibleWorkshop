@@ -1,0 +1,26 @@
+Copy the cisco_hostname2.yml playbook to cisco_hostname3.yml.
+Add the notify parameter and handler to the new playbook.
+Run the playbook with a different hostname and verify change is saved
+to the startup configuration.
+
+#!/usr/bin/env ansible-playbook
+---
+- name: set hostname configuration
+  hosts: r1
+  gather_facts: false
+  vars:
+    hostname: crazy
+  tasks:
+  - name: Set system host-name on {{ inventory_hostname }}
+    cisco.ios.ios_hostname:
+      config:
+        hostname: "{{hostname}}"
+    notify: update-startup-config
+  handlers:
+    - name: update-startup-config
+      cisco.ios.ios_command:
+        commands:
+          - command: copy running-config startup-config
+            prompt: 'Destination filename.*'
+            answer: 'startup-config'
+

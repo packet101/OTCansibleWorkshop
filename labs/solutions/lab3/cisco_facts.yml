@@ -1,0 +1,11 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Gather cisco facts
+  hosts: cisco
+  gather_facts: false
+  tasks:
+  - name: Invoke the cisco.ios.ios_facts module to gather facts
+    cisco.ios.ios_facts:
+  - name: print all IOS facts
+    ansible.builtin.debug:
+      var: ansible_facts

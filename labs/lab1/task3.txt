@@ -1,0 +1,13 @@
+Run the ansible-inventory command to familiarize yourself with its output.
+ansible-inventory --list
+
+Open the file inventory/routers in your editor.
+nano inventory/routers
+
+Add these 3 lines then save the file.
+[allrouters]
+r1
+r2
+
+Run the ansible-inventory command to verify your change.
+ansible-inventory --list

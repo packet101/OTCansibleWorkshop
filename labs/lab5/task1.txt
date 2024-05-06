@@ -1,0 +1,20 @@
+Open a new playbook called cisco_backup.yml
+
+nano cisco_backup.yml
+
+The content of this playbook should look like the playbook below.
+
+---
+- name: backup all cisco routers configuration
+  hosts: cisco
+  gather_facts: false
+  tasks:
+  - name:
+    ansible.builtin.command: /bin/date "+%Y-%m-%d"
+    register: date_time
+    delegate_to: localhost
+  - name: backup {{ inventory_hostname }}
+    cisco.ios.ios_config:
+      backup: true
+      backup_options:
+        filename: "{{ inventory_hostname }}-{{ date_time.stdout_lines[0] }}.txt"

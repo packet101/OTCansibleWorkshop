@@ -1,0 +1,27 @@
+Copy facts.yml to facts_when.yml.
+
+Change the playbook to have a single play operating across all routers.
+
+Use the when statement to ensure conditional execution only on appropriate hosts. i.e. Junos_facts on Juniper devices only.
+
+
+#!/usr/bin/env ansible-playbook
+---
+- name: gather router facts
+  hosts: all
+  gather_facts: false
+  tasks:
+  - name: Use junos_facts module
+    junipernetworks.junos.junos_facts:
+    when: ansible_network_os == "junipernetworks.junos.junos"
+  - name: print all junos facts
+    ansible.builtin.debug:
+      var: ansible_facts
+    when: inventory_hostname in groups['juniper']
+  - name: Use ios_facts module
+    cisco.ios.ios_facts:
+    when: ansible_network_os == "cisco.ios.ios"
+  - name: print all IOS facts
+    ansible.builtin.debug:
+      var: ansible_facts
+    when: ansible_network_os == "cisco.ios.ios"

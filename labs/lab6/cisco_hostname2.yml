@@ -1,0 +1,12 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: set hostname configuration
+  hosts: r1
+  gather_facts: false
+  vars:
+    hostname: r1
+  tasks:
+  - name: Set system host-name on {{ inventory_hostname }}
+    cisco.ios.ios_hostname:
+      config:
+        hostname: "{{hostname}}"

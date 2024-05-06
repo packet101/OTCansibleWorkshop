@@ -1,0 +1,17 @@
+Create a new playbook cisco_hostname2.yml. 
+Use junos_hostname2.yml as your starting point.
+Change the host, hostname, and module name.
+
+
+#!/usr/bin/env ansible-playbook
+---
+- name: set hostname configuration
+  hosts: r1
+  gather_facts: false
+  vars:
+    hostname: r1
+  tasks:
+  - name: Set system host-name on {{ inventory_hostname }}
+    cisco.ios.ios_hostname:
+      config:
+        hostname: "{{hostname}}"

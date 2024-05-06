@@ -1,0 +1,15 @@
+Create a new playbook junos_hostname2.yml.
+Use the junos_hostname module to set the hostname back to "r2"
+
+#!/usr/bin/env ansible-playbook
+---
+- name: set hostname configuration
+  hosts: r2
+  gather_facts: false
+  vars:
+    hostname: r2
+  tasks:
+  - name: Set system host-name on {{ inventory_hostname }}
+    junipernetworks.junos.junos_hostname:
+      config:
+        hostname: "{{hostname}}"

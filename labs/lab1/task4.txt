@@ -1,0 +1,2 @@
+ansible juniper -m junipernetworks.junos.junos_facts -a gather_subset=all,\!hardware
+ansible cisco -m cisco.ios.ios_facts -a gather_subset=all

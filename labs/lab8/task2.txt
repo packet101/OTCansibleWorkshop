@@ -1,0 +1,15 @@
+Use the junos_config module to create a static route equivalent to:
+set routing-options static route 172.31.1.1 next-hop 10.200.200.1
+
+Edit the juniper_route.yml playbook to match the one shown below.
+
+#!/usr/bin/env ansible-playbook
+---
+- name: Configure static route on Junos to r1
+  hosts: r2
+  gather_facts: false
+  tasks:
+    - name: set static route to r1 from r2
+      junipernetworks.junos.junos_config:
+        lines:
+          - set routing-options static route 172.31.1.1 next-hop 10.200.200.1

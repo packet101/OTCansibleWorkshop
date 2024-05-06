@@ -1,0 +1,14 @@
+---
+- name: backup all routers configuration
+  hosts: all
+  gather_facts: true
+  tasks:
+  - name:
+    ansible.builtin.command: /bin/date "+%Y-%m-%d"
+    register: date_time
+    delegate_to: localhost
+  - name: backup {{ inventory_hostname }}
+    junipernetworks.junos.junos_config:
+      backup: true
+      backup_options:
+        filename: "{{ inventory_hostname }}-{{ date_time.stdout_lines[0] }}.txt"

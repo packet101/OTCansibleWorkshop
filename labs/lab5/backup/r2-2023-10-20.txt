@@ -1,0 +1,20 @@
+set version 18.2R1.9
+set system login user admin uid 2000
+set system login user admin class super-user
+set system login user admin authentication encrypted-password "$6$kROaItFW$7DxteQ.7ySpjQBT1xm9EZg8j5avd/qlaguFg0PQKkHbqtOodvNP95uGdMvMSCEd6SvPCy.RUqiBzalYI3aH3W1"
+set system root-authentication encrypted-password "$6$qKj1CL8T$0gUJa6QxFloi76qPLpPaW0IfIg0e1JDoCYmifkfDsWo45MMUlz1esU1z5mLpUNtNfBBDfp6owRO9v6e.XEOvo1"
+set system host-name vmx1
+set system management-instance
+set system services ssh
+set system services extension-service request-response grpc clear-text port 57400
+set system services extension-service request-response grpc max-connections 4
+set system services netconf ssh
+set system services netconf rfc-compliant
+set system syslog user * any emergency
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set system syslog file interactive-commands interactive-commands any
+set chassis fpc 0 pic 0 number-of-ports 96
+set interfaces fxp0 unit 0 family inet address 10.0.0.15/24
+set routing-instances mgmt_junos description management-instance
+set routing-instances mgmt_junos routing-options static route 0.0.0.0/0 next-hop 10.0.0.2

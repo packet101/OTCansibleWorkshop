@@ -1,0 +1,9 @@
+Open juniper_facts.yml with your editor.
+
+nano juniper_facts.yml
+
+change the names of the plays and tasks to refer to Juniper.
+
+change the host group to juniper
+
+change the module to junipernetworks.junos.junos_facts

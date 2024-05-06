@@ -1,0 +1,25 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: gather date and time
+  hosts: localhost
+  gather_facts: false
+  tasks:
+  - name:
+    ansible.builtin.command: /bin/date "+%Y-%m-%d"
+    register: date_time
+- name: backup all routers configuration
+  hosts: all
+  gather_facts: false
+  tasks:
+  - name: backup {{ inventory_hostname }}
+    junipernetworks.junos.junos_config:
+      backup: true
+      backup_options:
+        filename: "{{ inventory_hostname }}-{{ hostvars['localhost']['date_time']['stdout_lines'][0] }}.txt"
+    when: inventory_hostname in groups['juniper']
+  - name: backup {{ inventory_hostname }}
+    cisco.ios.ios_config:
+      backup: true
+      backup_options:
+        filename: "{{ inventory_hostname }}-{{ hostvars['localhost']['date_time']['stdout_lines'][0] }}.txt"
+    when: inventory_hostname in groups['cisco']

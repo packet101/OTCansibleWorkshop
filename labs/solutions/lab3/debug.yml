@@ -1,0 +1,11 @@
+---
+- name: Debug module introduction
+  hosts: all
+  gather_facts: false
+  vars:
+    debug_name: My custom text
+  tasks:
+  -  name: Print debug_name variable with debug module.
+     ansible.builtin.debug:
+       var: debug_name
+   

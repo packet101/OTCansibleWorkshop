@@ -1,0 +1,9 @@
+Open cisco_facts.yml with your editor.
+
+nano cisco_facts.yml
+
+Add the following lines to the end of file. Make sure to have the correct indentation.
+  - name: print all IOS facts
+    ansible.builtin.debug:
+      var: ansible_facts
+

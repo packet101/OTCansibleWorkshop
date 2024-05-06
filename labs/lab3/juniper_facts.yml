@@ -1,0 +1,11 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Gather juniper facts
+  hosts: juniper
+  gather_facts: false
+  tasks:
+  - name: Invoke the junipernetworks.junos.junos_facts module
+    junipernetworks.junos.junos_facts:
+  - name: print all Junos facts
+    ansible.builtin.debug:
+      var: ansible_facts

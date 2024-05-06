@@ -1,0 +1,19 @@
+set version 18.2R1.9
+set system login user ansible uid 2000
+set system login user ansible class super-user
+set system login user ansible authentication encrypted-password "$6$8XD49i.Y$QYSmqNOT4EGqmRCb6GpZ8SKSUMELPQ91UndTOqS85TKGTKypSBdDTsgul/fxsk2g3zHtMa8KuxyY61A2s.T6y."
+set system root-authentication encrypted-password "$6$g7zSuvzE$jFx783okD2vlFFMCAZJbP2CtHz6PPxIXQCiV24MwDA5XC5uoW/QPNGj0CS1K.Lo3pW/.BOMzbEflC3ujFqRdb1"
+set system host-name R2
+set system services ssh
+set system services netconf ssh
+set system syslog user * any emergency
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set system syslog file interactive-commands interactive-commands any
+set system processes dhcp-service traceoptions file dhcp_logfile
+set system processes dhcp-service traceoptions file size 10m
+set system processes dhcp-service traceoptions level all
+set system processes dhcp-service traceoptions flag packet
+set interfaces ge-0/0/0 unit 0 family inet address 192.168.255.2/24
+set interfaces ge-0/0/9 unit 0 family inet address 10.0.1.222/23
+set interfaces fxp0 unit 0 family inet dhcp vendor-id Juniper-vmx-VM64EE9F0AE8

@@ -1,0 +1,30 @@
+In this task you will rewrite the playbook from task2 to be more concise. 
+Use the loop statement, and convert the variable declarations into a list of dictionaries
+as described in the lab guide.
+
+Your playbook should look like this.
+
+#!/usr/bin/env ansible-playbook
+---
+- name: set IP address on R1
+  hosts: r1
+  gather_facts: false
+  tasks:
+  - name: Configure interfaces on r1
+    cisco.ios.ios_l3_interfaces:
+      config:
+      - name: "{{ item.int }}"
+        ipv4:
+          - address: "{{ item.ip }}/{{ item.mask }}"
+            secondary: "{{ item.sec }}"
+    loop:
+      - { int: Loopback1, ip: 172.31.1.1, mask: 32, sec: False }
+      - { int: GigabitEthernet2, ip: 10.200.200.1, mask: 24, sec: False }
+    notify: update-startup-config
+  handlers:
+    - name: update-startup-config
+      cisco.ios.ios_command:
+        commands:
+          - command: copy running-config startup-config
+            prompt: 'Destination filename.*'
+            answer: 'startup-config'

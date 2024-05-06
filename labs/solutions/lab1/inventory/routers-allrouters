@@ -1,0 +1,7 @@
+[cisco]
+r1
+[juniper]
+r2
+[allrouters]
+r1
+r2

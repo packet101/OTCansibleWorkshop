@@ -1,0 +1,14 @@
+Open cisco_facts.yml in your editor.
+
+nano cisco_facts.yml
+
+Add the basic playbook structure to the top of the file.
+
+---
+- name: Gather cisco facts
+  hosts: cisco
+  gather_facts: false
+  tasks:
+  - name: Invoke the cisco.ios.ios_facts module to gather facts
+    cisco.ios.ios_facts:
+

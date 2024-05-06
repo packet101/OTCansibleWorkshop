@@ -1,0 +1,22 @@
+Create a playbook named juniper_backup.yml.
+
+The contents of the playbook should be:
+
+#!/usr/bin/env ansible-playbook
+---
+- name: gather date and time
+  hosts: localhost
+  gather_facts: false
+  tasks:
+  - name:
+    ansible.builtin.command: /bin/date "+%Y-%m-%d"
+    register: date_time
+- name: backup all juniper routers configuration
+  hosts: juniper
+  gather_facts: false
+  tasks:
+  - name: backup {{ inventory_hostname }}
+    junipernetworks.junos.junos_config:
+      backup: true
+      backup_options:
+        filename: "{{ inventory_hostname }}-{{ hostvars['localhost']['date_time']['stdout_lines'][0] }}.txt"

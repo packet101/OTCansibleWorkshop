@@ -1,0 +1,13 @@
+Your hostname for r1 is clab-devpod-csr1.
+Your hostname for r2 is clab-devpod-vmx1.
+The username and password for r1 is admin/admin
+The username and password for r2 is admin/admin@123
+
+Login to one of the devices, your choice, and make a configuration change to the hostname.
+For r1:
+  config t
+  hostname <new hostname>
+For r2:
+  config
+  set system hostname <new hostname>
+  commit

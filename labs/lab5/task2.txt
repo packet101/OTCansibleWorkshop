@@ -1,0 +1,15 @@
+Create a playbook called register.yml with the following content.
+
+
+#!/usr/bin/env ansible-playbook
+---
+- name: explore register variable structure.
+  hosts: localhost
+  gather_facts: false
+  tasks:
+  - name:
+    ansible.builtin.command: /bin/date "+%Y-%m-%d"
+    register: date_time
+  - name: display date_time structure
+    ansible.builtin.debug:
+      var: date_time

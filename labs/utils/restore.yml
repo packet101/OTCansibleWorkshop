@@ -1,0 +1,17 @@
+---
+- name: restore configuration
+  hosts: all
+  gather_facts: false
+  vars_prompt:
+  - name: filebase
+    prompt: Enter the filename (base|labX)?
+    private: false
+  tasks:
+  - name: restore {{ inventory_hostname }}
+    junipernetworks.junos.junos_config:
+        src: "backup/{{ filebase}}-{{ inventory_hostname }}.txt"
+    when: inventory_hostname in groups['juniper']
+  - name: restore {{ inventory_hostname }}
+    cisco.ios.ios_config:
+        src: "backup/{{ filebase}}-{{ inventory_hostname }}.txt"
+    when: inventory_hostname in groups['cisco']

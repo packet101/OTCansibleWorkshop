@@ -1,0 +1,35 @@
+Create a playbook r2.yml that combines juniper_hostname2.yml from lab 6,
+junos_ip.yml from lab 7, and r2_ospf.yml from this lab.
+
+There should be a single play that uses the tasks from all 3 playbooks.
+
+#!/usr/bin/env ansible-playbook
+---
+- name: Configure R2
+  hosts: r2
+  gather_facts: false
+  vars:
+    hostname: r2
+  tasks:
+  - name: Set system host-name on {{ inventory_hostname }}
+    junipernetworks.junos.junos_hostname:
+      config:
+        hostname: "{{hostname}}"                  
+  - name: Configure interfaces on r2
+    junipernetworks.junos.junos_l3_interfaces:
+      config:
+      - name: "{{ item.int }}"
+        unit: "{{ item.unit }}"
+        ipv4:
+          - address: "{{ item.ip }}/{{ item.mask }}"
+    loop:
+      - { int: lo0, unit: 0, ip: 172.31.1.2, mask: 32 }
+      - { int: ge-0/0/0, unit: 0, ip: 10.200.200.2, mask: 24 }
+  - name: Configure OSPF on R2
+    junipernetworks.junos.junos_ospfv2:
+      config:
+        - areas:
+          - area_id: 0.0.0.0
+            interfaces: 
+              - name: ge-0/0/0.0
+              - name: lo0.0
