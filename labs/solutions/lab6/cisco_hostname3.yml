@@ -1,0 +1,21 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: set hostname configuration
+  hosts: r1
+  gather_facts: false
+  vars:
+    hostname: crazy
+  tasks:
+  - name: Set system host-name on {{ inventory_hostname }}
+    cisco.ios.ios_hostname:
+      config:
+        hostname: "{{hostname}}"
+    notify: update-startup-config
+  handlers:
+    - name: update-startup-config
+      cisco.ios.ios_command:
+        commands:
+          - command: copy running-config startup-config
+            prompt: 'Destination filename.*'
+            answer: 'startup-config'
+

@@ -1,0 +1,14 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Configure OSPF on R2
+  hosts: r2
+  gather_facts: false
+  tasks:
+    - name: Configure OSPF on R2
+      junipernetworks.junos.junos_ospfv2:
+        config:
+          - areas:
+            - area_id: 0.0.0.0
+              interfaces: 
+                - name: ge-0/0/0.0
+                - name: lo0.0

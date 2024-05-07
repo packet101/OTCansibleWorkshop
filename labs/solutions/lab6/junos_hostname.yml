@@ -1,0 +1,12 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: set hostname configuration
+  hosts: r2
+  gather_facts: false
+  vars:
+    hostname: vmx-a
+  tasks:
+  - name: Set system host-name on {{ inventory_hostname }}
+    junipernetworks.junos.junos_config:
+      lines:
+        - set system host-name {{ hostname }}

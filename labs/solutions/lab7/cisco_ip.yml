@@ -1,0 +1,34 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: set IP address  on R1
+  hosts: r1
+  gather_facts: false
+  vars:
+    ip_gig2: 10.200.200.1
+    mask_gig2: 255.255.255.0
+    ip_lo1: 172.31.1.1
+    mask_lo1: 255.255.255.255
+  tasks:
+  - name: Configure lo1 on r1
+    cisco.ios.ios_config:
+      lines:
+        - ip address {{ ip_lo1 }} {{ mask_lo1 }}
+#        - no shutdown
+      parents:
+        - interface Loopback1
+    notify: update-startup-config
+  - name: Configure GigabitEthernet2 on r1
+    cisco.ios.ios_config:
+      lines:
+        - ip address {{ ip_gig2 }} {{ mask_gig2 }}
+        - no shutdown
+      parents:
+        - interface GigabitEthernet2
+    notify: update-startup-config
+  handlers:
+    - name: update-startup-config
+      cisco.ios.ios_command:
+        commands:
+          - command: copy running-config startup-config
+            prompt: 'Destination filename.*'
+            answer: 'startup-config'

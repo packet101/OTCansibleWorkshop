@@ -1,10 +1,11 @@
+#!/usr/bin/env ansible-playbook
 ---
 - name: restore configuration
   hosts: all
   gather_facts: false
   vars_prompt:
   - name: host
-    prompt: "Enter the hostname as it appears in the inventory (R1,R2):"
+    prompt: "Enter the hostname as it appears in the inventory (r1,r2):"
     private: false
   - name: date
     prompt: "Enter the date (YYYY-MM-DD):"
@@ -13,8 +14,10 @@
   - name: restore {{ inventory_hostname }}
     junipernetworks.junos.junos_config:
         src: "backup/{{ inventory_hostname }}-{{ date }}.txt"
+        update: replace
     when: inventory_hostname in groups['juniper'] and inventory_hostname == host
   - name: restore {{ inventory_hostname }}
     cisco.ios.ios_config:
         src: "backup/{{ inventory_hostname }}-{{ date }}.txt"
+        save_when: changed
     when: inventory_hostname in groups['cisco'] and inventory_hostname == host
