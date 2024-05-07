@@ -1,0 +1,13 @@
+name: pod4
+
+topology:
+  nodes:
+    csr1:
+      kind: vr-csr
+      image: localhost/vrnetlab/vr-csr:17.03.01
+    vmx1:
+      kind: vr-vmx
+      image: localhost/vrnetlab/vr-vmx:18.2R1.9
+
+  links:
+    - endpoints: ["csr1:eth1", "vmx1:eth1"]
