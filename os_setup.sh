@@ -9,9 +9,11 @@ dnf install ksmtuned
 dnf install nano
 dnf config-manager --add-repo=https://yum.fury.io/netdevops/
 echo "gpgcheck=0" | sudo tee -a /etc/yum.repos.d/yum.fury.io_netdevops_.repo
-dnf install containerlab
+dnf install containerlab-0.46.2
 cd /root
 git clone https://github.com/hellt/vrnetlab.git
+cd vrnetlab
+git checkout v0.12.1
 
 echo "Place CSR QCOW2 file in /root/vrnetlab/csr."
 echo "Then run 'make docker-image'."
